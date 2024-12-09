@@ -1,13 +1,13 @@
 <?php
-include 'header_user.php'; // Nagłówek dla użytkownika
-include 'db.php'; // Połączenie z MongoDB
 session_start();
 
-// Sprawdzenie, czy użytkownik jest zalogowany
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'user') {
     header('Location: login.php');
     exit;
 }
+include 'header_user.php';
+include 'db.php';
+
 
 // Pobranie listy filmów
 $moviesList = $movies->find([], ['sort' => ['title' => 1]]); // Sortowanie po tytule
