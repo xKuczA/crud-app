@@ -1,11 +1,11 @@
 <?php
-include 'header_admin.php';
 session_start();
-
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header('Location: login.php');
     exit;
 }
+
+include 'header_admin.php';
 ?>
 <head>
 <link rel="stylesheet" href="style.css">
