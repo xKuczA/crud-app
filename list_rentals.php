@@ -1,13 +1,14 @@
 <?php
-include 'header_admin.php';
-include 'db.php';
 session_start();
 
-// Sprawdzenie, czy użytkownik jest zalogowany i ma rolę admina
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header('Location: login.php');
     exit;
 }
+
+include 'header_admin.php';
+include 'db.php';
+
 
 // Obsługa zwrotu filmu
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rental_id'])) {
