@@ -1,13 +1,14 @@
 <?php
-include 'header_admin.php'; // Nagłówek dla administratora
-include 'db.php'; // Połączenie z MongoDB
 session_start();
 
-// Sprawdzenie, czy użytkownik jest zalogowany i ma rolę admina
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header('Location: login.php');
     exit;
 }
+
+include 'header_admin.php';
+include 'db.php';
+
 
 // Pobranie listy filmów
 $moviesList = $movies->find();
