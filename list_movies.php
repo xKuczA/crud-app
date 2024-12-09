@@ -1,12 +1,13 @@
 <?php
-include 'header_admin.php';
-include 'db.php';
 session_start();
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header('Location: login.php');
     exit;
 }
+include 'header_admin.php';
+include 'db.php';
+
 
 $moviesList = $movies->find();
 
