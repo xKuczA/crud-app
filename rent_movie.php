@@ -1,16 +1,16 @@
 <?php
-include 'header_user.php'; // Nagłówek dla użytkownika
-include 'db.php'; // Połączenie z MongoDB
 session_start();
 
-// Sprawdzenie, czy użytkownik jest zalogowany
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
 }
 
-// Pobranie danych użytkownika z sesji
-$userId = (int)$_SESSION['user_id']; // Konwertujemy ID użytkownika na liczbę
+include 'header_user.php';
+include 'db.php';
+
+
+$userId = (int)$_SESSION['user_id']; 
 
 // Obsługa formularza wypożyczenia
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
