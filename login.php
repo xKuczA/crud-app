@@ -1,4 +1,10 @@
 <?php
+session_start();
+if (isset($_SESSION['user'])) {
+    echo "Zalogowany użytkownik: " . $_SESSION['user'];
+}
+
+
 include 'header_guest.php';
 include 'db.php';
 session_start();
