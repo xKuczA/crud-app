@@ -1,12 +1,14 @@
 <?php
-include 'header_admin.php';
-include 'db.php';
 session_start();
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header('Location: login.php');
     exit;
 }
+
+include 'header_admin.php';
+include 'db.php';
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $clientId = (int)$_POST['client_id'];
