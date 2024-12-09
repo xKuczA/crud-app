@@ -4,30 +4,45 @@ if (isset($_SESSION['user'])) {
     echo "Zalogowany użytkownik: " . $_SESSION['user'];
 }
 
+include 'header_guest.php'; // Sprawdź, czy plik ten nie wysyła danych HTML
 
-include 'header_guest.php';
-include 'db.php';
-session_start();
+include 'db.php'; // Plik połączenia z bazą danych
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
+    // Debugowanie: Sprawdź, czy dane z formularza są odbierane
+    echo "Otrzymano login: $username <br>";
+
+    // Pobierz użytkownika z bazy danych
     $user = $clients->findOne(['username' => $username]);
 
-    if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = (string)$user['_id'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['role'] = $user['role'];
+    if ($user) {
+        // Debugowanie: Sprawdź, czy użytkownik został znaleziony
+        echo "Znaleziono użytkownika: {$user['username']} <br>";
 
-        if ($user['role'] === 'admin') {
-            header('Location: admin.php');
+        // Sprawdź hasło
+        if (password_verify($password, $user['password'])) {
+            echo "Hasło poprawne! <br>"; // Debugowanie: Potwierdź poprawne hasło
+
+            // Ustaw dane sesji
+            $_SESSION['user_id'] = (string)$user['_id'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['role'] = $user['role'];
+
+            // Przekierowanie w zależności od roli użytkownika
+            if ($user['role'] === 'admin') {
+                header('Location: admin.php');
+            } else {
+                header('Location: user_dashboard.php');
+            }
+            exit;
         } else {
-            header('Location: user_dashboard.php');
+            echo "<p>Nieprawidłowe hasło.</p>";
         }
-        exit;
     } else {
-        echo "<p>Błędny login lub hasło.</p>";
+        echo "<p>Nie znaleziono użytkownika o podanym loginie.</p>";
     }
 }
 ?>
